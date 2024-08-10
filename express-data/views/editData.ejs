@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/editData" method="post">
+      <table align="center">
+        <tr>
+          <td>Id :</td>
+          <td><input type="number" name="id" value="<%= editData.id %>" /></td>
+        </tr>
+        <tr>
+          <td>Name :</td>
+          <td><input type="text" name="name" value="<%= editData.name %>"/></td>
+        </tr>
+        <tr>
+          <td>Enrl No. :</td>
+          <td><input type="text" name="EnrlNo" value="<%= editData.EnrlNo %>"/></td>
+        </tr>
+        <tr>
+          <td>Course :</td>
+          <td><input type="text" name="course" value="<%= editData.course %>"/></td>
+        </tr>
+        <tr>
+          <td>Mobile No. :</td>
+          <td><input type="text" name="MobileNo" value="<%= editData.MobileNo %>"/></td>
+        </tr>
+        <tr>
+          <td>
+            <input type="submit" value="Save" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>
