@@ -15,7 +15,7 @@ userRoutes.post("/addData" , async(req,res)=>{
 
     const savedUser = await newUser.save();
     console.log(savedUser)
-    res.json({"userdata":savedUser})
+    res.send(savedUser);
 })
 
 // GET DATA
@@ -39,7 +39,7 @@ userRoutes.delete("/delete/:id" , async(req,res)=>{
 
 userRoutes.put("/update/:id" , async(req,res)=>{
     const id = req.params.id
-    const updateData = await user.findByIdAndUpdate(id,req.body,{new:true})
+    const updateData = await user.findByIdAndUpdate(id,req.body)
     console.log(updateData)
     res.send(updateData)
 })
