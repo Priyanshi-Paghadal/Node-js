@@ -27,5 +27,22 @@ userRoutes.get("/getData" , async(req,res)=>{
     res.send(getData)
 })
 
-module.exports = userRoutes;
+//Delete Data
 
+userRoutes.delete("/delete/:id" , async (req,res)=>{
+    const {id} = req.params;
+    console.log(id);
+    const deletedData = await user.findByIdAndDelete(id);
+    console.log(deletedData);
+})
+
+// Update Data
+
+userRoutes.put("/update/:id", async(req,res)=>{
+    const {id} = req.params;
+    const {name , email , age , password} = req.body;
+    const updateData = await user.findByIdAndUpdate(id , {name,email,age,password})
+    console.log(updateData);
+})
+
+module.exports = userRoutes;
