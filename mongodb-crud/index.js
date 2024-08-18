@@ -3,9 +3,9 @@ const app = express()
 const {connection} = require("./connection/db")
 const userRoutes = require("./controller/user.routes")
 
-app.use(express.json())
+app.use(express.json()) // for convert string data to json
 
-app.use("/users", userRoutes);
+app.use("/users", userRoutes);  // for make route
 
 const port = 9999;
 
