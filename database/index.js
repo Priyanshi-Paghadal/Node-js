@@ -50,25 +50,15 @@ app.get("/delete", async (req, res) => {
 
 // UPDATE DATA
 
-app.get("/edit", async(req, res) => {
-    let id = req.query.id;
-    let editD =await user.find();
-    let editData = editD.filter((item) => item.id === id);
-    res.render('editData' , {editData : editData[0]});
+app.get("/edit/:id", async (req, res) => {
+    let id = req.params.id;
+    let editData = await user.findById(id);
+    res.render('editData', { editData });
 })
 
-app.post("/editData" , async(req,res)=>{
-    let editId = req.body.id;
-    let editda = await user.find();
-    user = editda.map((item)=>{
-        if(item.id === editId){
-            item.name = req.body.name;
-            item.email = req.body.email;
-            item.age = req.body.age;
-            item.password = req.body.password;
-        }
-        return item;
-    })
+app.post("/editData/:id", async (req, res) => {
+    let editId = req.params.id;
+    let userData = await user.findByIdAndUpdate(editId, req.body);
     res.redirect("/form");
 })
 

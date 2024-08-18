@@ -89,13 +89,13 @@ app.get("/delete", (req, res) => {
 app.get("/edit", (req, res) => {
     let userId = Number(req.query.id);
     let editData = studentData.filter((item) => item.id === userId);
-    res.render('editData' , {editData : editData[0]});
+    res.render('editData', { editData: editData[0] });
 })
 
-app.post("/editData" , (req,res)=>{
+app.post("/editData", (req, res) => {
     let editId = Number(req.body.id);
-    studentData = studentData.map((item)=>{
-        if(item.id === editId){
+    studentData = studentData.map((item) => {
+        if (item.id === editId) {
             item.name = req.body.name;
             item.EnrlNo = req.body.EnrlNo;
             item.course = req.body.course;
