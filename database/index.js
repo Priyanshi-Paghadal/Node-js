@@ -2,6 +2,7 @@ const express = require("express");
 const app = express()
 
 const ejs = require("ejs");
+
 const multer = require("multer");
 const path = require("path")
 
@@ -14,8 +15,11 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
 app.use("/imguploads", express.static(path.join(__dirname, "imguploads")))
+
 app.set("view engine", "ejs");
+
 app.use("/users", usersRoutes);
+
 const port = 2700;
 
 app.get("/", (req, res) => {
