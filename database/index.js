@@ -91,7 +91,7 @@ app.post('/editData/:id', imageUpload, async (req, res) => {
     res.redirect("/form");
 })
 
-app.listen(port, async (req, res, err) => {
+app.listen(port, async (req, res) => {
     await connections;
     console.log("server is running at port ", port);
 })
