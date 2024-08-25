@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"
+        type="text/css" />
     <style>
         * {
             margin: 0;
@@ -21,7 +23,7 @@
         }
 
         .inner {
-            width: 500px;
+            width: 600px;
             background-color: #fff;
             min-height: 500px;
             border-radius: 10px;
@@ -32,7 +34,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #D1E9F6;
         }
 
@@ -52,7 +54,7 @@
             background-color: green;
             color: #fff;
             border: none;
-            padding: 8px 25px;
+            padding: 8px 35px;
             border-radius: 5px;
         }
 
@@ -68,7 +70,7 @@
 
         input[type='text'] {
             padding: 5px 10px;
-            width: 250px;
+            width: 330px;
         }
 
         input[type='checkbox'] {
@@ -76,13 +78,15 @@
             margin-right: 30px;
             accent-color: green;
         }
-        p{
+
+        p {
             border-left: 3px double #f6dbd8;
             height: 50px;
             padding-left: 20px;
             line-height: 50px;
         }
-        a{
+
+        a {
             display: inline-block;
             text-decoration: none;
         }
@@ -92,13 +96,15 @@
             border-block: 1px solid #f2f0f1;
             align-items: center;
         }
-        .edit{
+
+        .edit {
             background-color: #4567b7;
             color: #fff;
             padding: 5px 10px;
             border-radius: 5px;
         }
-        .remove{
+
+        .remove {
             background-color: #444;
             color: #fff;
             padding: 5px 10px;
@@ -124,19 +130,37 @@
             <% allTask.map((item)=>{ %>
                 <ul class="flex justify-between">
                     <li class="flex">
-                        <input type="checkbox" name="check">
-                        <p>
+                        <input type="checkbox" name="check" class="check">
+                        <p class="text">
                             <%= item.name %>
                         </p>
                     </li>
                     <li>
-                        <a href="/edit/<%= item._id %>" class="edit">Edit</a>
-                        <a href="/delete?id=<%= item._id %>" class="remove">Remove</a>
+                        <a href="/edit/<%= item._id %>" class="edit">
+                            <i class="ri-edit-2-line"></i>
+                            Edit</a>
+                        <a href="/delete?id=<%= item._id %>" class="remove">
+                            <i class="ri-delete-bin-6-line"></i>
+                            Remove</a>
                     </li>
                 </ul>
-                <% }) %>
+            <% }) %>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('input[type="checkbox"]').on('change', function () {
+                if ($(this).is(':checked')) {
+                    $(this).next('.text').css("text-decoration", "line-through");
+                } else {
+                    $(this).next('.text').css("text-decoration", "none");
+                }
+            });
+        });
+    </script>
 
 </body>
 
