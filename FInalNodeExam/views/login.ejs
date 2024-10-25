@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="/auth/loginData">Login</a>
+    <a href="/auth/registerData">Register</a>
+    <a href="/pro/formData">form</a>
+    <a href="/pro/home">home</a>
+    <h1>Login Now</h1>
+    <form action="" id="form">
+        <label for="">Email : </label>
+        <br>
+        <input type="email" id="userEmail">
+        <br> <br>
+        <label for="">Password : </label>
+        <br>
+        <input type="password" id="userPassword">
+        <br> <br>
+        <button>Register</button>
+        <a href="/auth/registerData">Don't have an account ?</a>
+    </form>
+
+    <script>
+        const form = document.querySelector("#form");
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const userEmail = document.querySelector("#userEmail").value;
+            const userPassword = document.querySelector("#userPassword").value;
+
+            fetch("/auth/login", {
+                method: "POST",
+                body: JSON.stringify({ userEmail, userPassword }),
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8"
+                }
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data)
+                    if (data.success) {
+                        window.location.href = "/pro/formData";
+                    }
+                })
+                .catch((error) => console.log(error))
+
+            document.querySelector("#userEmail").value = "";
+            document.querySelector("#userPassword").value = "";
+        })
+    </script>
+</body>
+
+</html>

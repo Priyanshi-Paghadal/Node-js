@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-4 {
+            width: 33.33%;
+        }
+
+        .main {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .nav {
+            margin: 50px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav a {
+            margin: 0 10px;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        p{
+            margin-bottom: 10px;
+        }
+
+        .product {
+            padding: 20px;
+            margin: 20px;
+            background-color: aliceblue;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+        .edit{
+            background-color: rgb(96, 96, 214);
+            color: white;
+            padding: 8px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+        .delete{
+            background-color: #333;
+            color: white;
+            padding: 8px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/pro/home">View Product</a>
+        <a href="/pro/formData">Add Product</a>
+        <a href="/auth/registerData">Register</a>
+        <a href="/auth/loginData">Login</a>
+    </div>
+    <h1>Your Product</h1>
+
+    <div class="main">
+        <div class="row">
+
+            <% data.map((item)=>{ %>
+                <div class="col-4">
+                    <div class="product">
+                        <div class="flex">
+                            <h2>
+                                <%= item.productName %>
+                            </h2>
+                            <h2>
+                                <%= item.productPrice %> ₹
+                            </h2>
+                        </div>
+                        <p>
+                            Quantity : <%= item.productQuantity%>
+                        </p>
+                        <p>
+                            Discription : <%= item.discription %>
+                        </p>
+                        <div class="flex">
+                            <a href="/pro/edit/<%= item._id %>" class="edit">Edit</a>
+                            <button onclick="deleteFun('<%= item._id %>')" class="delete">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+
+    <script>
+        function deleteFun(id) {
+            fetch(`/pro/delete/${id}`, {
+                method: "DELETE",
+            })
+                .then((res) => {
+                    window.location.reload();
+                    console.log("Data deleted successfully");
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
+    </script>
+</body>
+
+</html>

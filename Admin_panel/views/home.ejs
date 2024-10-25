@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin: 80px 0;
+        }
+
+        .nav a {
+            margin: 0 10px;
+            display: inline-block;
+            font-size: 18px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .product-inner {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-4 {
+            width: 33.33%;
+        }
+
+        .product-item {
+            background-color: whitesmoke;
+            margin: 20px;
+            padding: 10px 30px;
+            border-radius: 10px;
+            box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0 20px 0;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        .category {
+            margin-bottom: 10px;
+        }
+
+        .delete {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .edit {
+            display: inline-block;
+            text-decoration: none;
+            background-color: rgb(142, 142, 230);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .msg-flash {
+            font-size: 18px;
+            color: black;
+            border-radius: 10px;
+            display: inline-block;
+            background-color: #ebe5e5;
+            line-height: 2;
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: slide 1s linear 1s;
+        }
+
+        @keyframes slide {
+            100% {
+                top: 12%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/proRoutes/form">Want to add More Product ?</a>
+    </div>
+
+    <div>
+        <% if (infoMessage) { %>
+            <div class="msg-flash" id="successMessage">
+                <%= infoMessage %>
+            </div>
+            <% } %>
+    </div>
+    <div class="main">
+        <div class="inner">
+            <h1>Welcome To The Home Page...</h1>
+            <div class="product-inner">
+                <% data.map((item)=>{ %>
+                    <div class="col-4">
+                        <div class="product-item">
+                            <div class="flex">
+                                <h3>
+                                    <%= item.productName %>
+                                </h3>
+                                <h3>
+                                    <%= item.price %> ₹
+                                </h3>
+                            </div>
+                            <p>
+                                Quantity : <%= item.quantity %>
+                            </p>
+                            <p class="category">
+                                Category : <%= item.category %>
+                            </p>
+                            <p>
+                                Rating : <%= item.rating %> / 5
+                            </p>
+                            <p>
+                                Additional Details : <%= item.discription %>
+                            </p>
+                            <div class="flex">
+                                <a href="/proRoutes/edit/<%= item._id %>" class="edit">Edit</a>
+                                <!-- <a href="/proRoutes/delete?id=<%= item._id %>" class="delete">Delete</a> -->
+                                <button onclick="deleteFun('<%= item._id %>')" class="delete">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"></script>
+    <script>
+
+        setTimeout(function () {
+            $('#successMessage').hide();
+        }, 10000);
+
+        function deleteFun(id) {
+            fetch(`/proRoutes/delete/${id}`, {
+                method: "DELETE",
+            })
+                .then((res) => {
+                    window.location.reload();
+                    console.log("Data deleted successfully");
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
+    </script>
+
+</body>
+
+</html>

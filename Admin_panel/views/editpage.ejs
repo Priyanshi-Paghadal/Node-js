@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #dbecf3;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .inner {
+            width: 800px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+
+        select {
+            color: gray;
+        }
+
+        select option:first-child {
+            color: gray;
+        }
+
+        select option {
+            color: black;
+        }
+
+        input,
+        select {
+            width: 100%;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            border: 1px solid #e9e2e2;
+            outline: none;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-7 {
+            width: 58.33%;
+        }
+
+        .col-5 {
+            width: 41.67%;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .form {
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 15px 0 0 15px;
+        }
+
+        .form-img img {
+            height: 457px;
+            object-fit: cover;
+            border-radius: 0 15px 15px 0;
+        }
+
+        ::-webkit-input-placeholder {
+            color: gray;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto;
+            background-color: #46b9c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin: 80px 0;
+        }
+
+        .nav a {
+            margin: 0 10px;
+            display: inline-block;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/proRoutes/getData">View Product</a>
+    </div>
+    <div class="main">
+        <div class="inner">
+            <div class="row">
+                <div class="col-7">
+                    <div class="form">
+                        <form action="/proRoutes/edit/<%= data._id %>" method="post" id="form">
+                            <h1>Update Products Details</h1>
+                            <input type="hidden" id="id" value="<%= data._id %>">
+                            <input type="text" placeholder=" Product Name" id="productName"
+                                value="<%= data.productName %>">
+                            <input type="number" placeholder=" Product Price" id="price" value="<%= data.price %>">
+                            <input type="number" placeholder=" Product Rating" id="rating" value="<%= data.rating %>">
+                            <input type="number" placeholder=" Product Quantity" id="quantity"
+                                value="<%= data.quantity %>">
+                            <select name="category" id="category" value="<%= data.category %>">
+                                <option value="">--Select Category--</option>
+                                <option value="Watches">Watches</option>
+                                <option value="Shoes">Shoes</option>
+                                <option value="Jwellery">Jwellery</option>
+                                <option value="BagsLuggage">Bags & Luggage</option>
+                                <option value="BeautyGrooming">Beauty & Grooming</option>
+                                <option value="Grocery">Grocery</option>
+                                <option value="Toygames">Toys & Games</option>
+                                <option value="Kitchen">Kitchen</option>
+                                <option value="Books">Books</option>
+                                <option value="WomenClothes">Women Clothes</option>
+                                <option value="menClothes">Men Clothes</option>
+                            </select>
+
+                            <input type="text" placeholder=" Discription" id="discription"
+                                value="<%= data.discription %>">
+
+                            <button>Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="form-img">
+                        <img src="https://t3.ftcdn.net/jpg/02/41/43/18/360_F_241431868_8DFQpCcmpEPVG0UvopdztOAd4a6Rqsoo.jpg"
+                            alt="trolly" title="trolly" width="100%" height="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let form = document.querySelector("#form");
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            let id = document.querySelector("#id").value;
+            let productName = document.querySelector("#productName").value;
+            let price = document.querySelector("#price").value;
+            let rating = document.querySelector("#rating").value;
+            let quantity = document.querySelector("#quantity").value;
+            let category = document.querySelector("#category").value;
+            let discription = document.querySelector("#discription").value;
+
+            fetch(`/proRoutes/edit/${id}`, {
+                method: "PATCH",
+                body: JSON.stringify({ productName, price, rating, quantity, category, discription }),
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                }
+            })
+                .then((res) => res.json())
+                .then((data) =>{
+                    console.log("Product Updated successfully...", data);
+                    if(data.success){
+                        window.location.href = "/proRoutes/getData";
+                    }
+                })
+                .catch((err) => console.log(err))
+
+            console.log(productName, price, rating, quantity, category, discription);
+            document.querySelector("#productName").value = "";
+            document.querySelector("#price").value = "";
+            document.querySelector("#rating").value = "";
+            document.querySelector("#quantity").value = "";
+            document.querySelector("#category").value = "";
+            document.querySelector("#discription").value = "";
+        });
+    </script>
+
+</body>
+
+</html>

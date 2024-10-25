@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #d9edff;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .inner {
+            text-align: center;
+            width: 800px;
+            background-color: #fff;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+
+        .login-content {
+            padding: 30px;
+        }
+
+        .sign-up-img {
+            border-left: 1px solid #d9edff;
+        }
+
+        .col-5 {
+            width: 41.67%;
+        }
+
+        .col-7 {
+            width: 58.33%;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin: 80px 0;
+        }
+
+        .nav a {
+            margin: 0 10px;
+            display: inline-block;
+            font-size: 18px;
+        }
+
+        input {
+            width: 100%;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            border: 1px solid #e9e2e2;
+            outline: none;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto;
+            background-color: #2460da;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 18px;
+            font-size: 17px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/authRoutes/login">Login For User</a>
+        <a href="/authRoutes/register">Sign Up For User</a>
+    </div>
+    <div class="main">
+        <div class="inner">
+            <div class="row">
+                <div class="col-7">
+                    <div class="login-content">
+                        <h1>Generate OTP</h1>
+                        <form action="" method="post" id="form">
+                            <input type="email" id="userEmail" placeholder="Enter Your Email" required>
+                            <br> <br>
+                            <button>Generate OTP</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="sign-up-img">
+                        <img src="https://www.rhitrading.in/img/loginbg.png" alt="sign-up" title="sign-up" width="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.querySelector("#form");
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            let userEmail = document.querySelector('#userEmail').value;
+
+            fetch("/authRoutes/generateOTP", {
+                method: "POST",
+                body: JSON.stringify({ userEmail }),
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                }
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    if (data.success) {
+                        window.location.href = "/authRoutes/verifyOTP";
+                    }
+                })
+                .catch((error) => console.log(error))
+
+            document.querySelector("#userEmail").value = "";
+        })
+
+    </script>
+</body>
+
+</html>

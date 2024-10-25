@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="/auth/loginData">Login</a>
+    <a href="/auth/registerData">Register</a>
+    <a href="/pro/formData">form</a>
+    <a href="/pro/home">home</a>
+    <h1>Your Products</h1>
+    <% data.map((item)=>{ %>
+        <h2>
+            <%= item.productName %>
+        </h2>
+        <h2>
+            <%= item.productPrice %>
+        </h2>
+        <h2>
+            <%= item.productQuantity %>
+        </h2>
+        <h2>
+            <%= item.discription %>
+        </h2>
+        <a href="/pro/edit/<%= item._id %>" class="edit">Edit</a>
+        <button onclick="deleteFun('<%= item._id %>')" class="delete">Delete</button>
+        <% }) %>
+
+            <script>
+                function deleteFun(id) {
+                    fetch(`/pro/delete/${id}`, {
+                        method: "DELETE",
+                    })
+                        .then((res) => {
+                            window.location.reload();
+                            console.log("Data deleted successfully");
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
+                }
+            </script>
+</body>
+
+</html>

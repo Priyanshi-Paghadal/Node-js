@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #b7ddd9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin: 80px 0;
+        }
+
+        .nav a {
+            margin: 0 10px;
+            display: inline-block;
+            font-size: 18px;
+        }
+
+        input {
+            width: 100%;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            border: 1px solid #e9e2e2;
+            outline: none;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .inner {
+            text-align: center;
+            width: 700px;
+            background-color: #fff;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto;
+            background-color: #009c86;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 18px;
+            font-size: 17px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .col-5 {
+            width: 41.67%;
+            border-left: 1px solid #d3eaf2;
+        }
+
+        .col-7 {
+            width: 58.33%;
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/proRoutes/form">Add Your Products</a>
+        <a href="/proRoutes/getData">View Your Products</a>
+    </div>
+    <div class="main">
+        <div class="inner">
+            <div class="row">
+                <div class="col-7">
+                    <h1>Login Now</h1>
+                    <form action="/adminRoutes/login" method="post" id="form">
+                        <input type="email" id="email" placeholder="Enter Your Email">
+                        <br> <br>
+                        <input type="password" id="password" placeholder="Enter Your Password">
+                        <br> <br>
+                        <button>Log In</button>
+                        <a href="/adminRoutes/adminRegister">Don't Have an account ? </a>
+                        <a href="/adminRoutes/updatepassword">Update Password ? </a>
+                    </form>
+                </div>
+                <div class="col-5">
+                    <img src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg"
+                        alt="login-img" title="login-img" width="100%">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.querySelector("#form");
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.querySelector("#email").value;
+            const password = document.querySelector("#password").value;
+
+            fetch("/adminRoutes/login", {
+                method: "POST",
+                body: JSON.stringify({ email, password }),
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                }
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    if (data.success) {
+                        window.location.href = "/proRoutes/form";  // Redirect to form page on successful login
+                    } else {
+                        alert(data.msg);  // Display error message if login fails
+                    }
+                })
+                .catch((error) => console.log(error));
+
+            document.querySelector("#email").value = "";
+            document.querySelector("#password").value = "";
+        })
+    </script>
+</body>
+
+</html>

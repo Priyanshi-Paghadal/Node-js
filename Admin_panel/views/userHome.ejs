@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin: 80px 0;
+        }
+
+        .nav a {
+            margin: 0 10px;
+            display: inline-block;
+            font-size: 18px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .product-inner {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-4 {
+            width: 33.33%;
+        }
+
+        .product-item {
+            background-color: whitesmoke;
+            margin: 20px;
+            padding: 10px 30px;
+            border-radius: 10px;
+            box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0 20px 0;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        .category {
+            margin-bottom: 10px;
+        }
+        .inner{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .Addtocart{
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+        .buy{
+            background-color: orange;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: none;
+        }
+        h1{
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>User Home Page</h1>
+    <a href="/"></a>
+    <div class="main">
+        <div class="inner">
+            <% data.map((item)=>{ %>
+                <div class="col-4">
+                    <div class="product-item">
+                        <div class="flex">
+                            <h3>
+                                <%= item.productName %>
+                            </h3>
+                            <h3>
+                                <%= item.price %> ₹
+                            </h3>
+                        </div>
+                        <p>
+                            Quantity : <%= item.quantity %>
+                        </p>
+                        <p class="category">
+                            Category : <%= item.category %>
+                        </p>
+                        <p>
+                            Rating : <%= item.rating %> / 5
+                        </p>
+                        <p>
+                            Additional Details : <%= item.discription %>
+                        </p>
+                        <div class="flex">
+                            <a href="/authRoutes/login" class="Addtocart">Add To Cart</a>
+                            <a href="/authRoutes/login" class="buy">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+
+</html>

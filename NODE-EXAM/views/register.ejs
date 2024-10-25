@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav {
+            margin: 50px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav a {
+            margin: 0 10px;
+        }
+        input{
+            padding: 10px 20px;
+            width: 100%;
+        }
+        label{
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        button{
+            width: 100%;
+            background-color: green;
+            color: white;
+            border-radius: 7px;
+            padding: 10px ;
+            border: none;
+            margin-bottom: 10px;
+        }
+        .inner{
+            width: 500px;
+        }
+        a{
+            display: flex;
+            justify-content: center;
+        }
+        h1{
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/pro/home">View Product</a>
+        <a href="/pro/formData">Add Product</a>
+        <a href="/auth/registerData">Register</a>
+        <a href="/auth/loginData">Login</a>
+    </div>
+    <div class="main">
+        <div class="inner">
+            <form action="/auth/register" id="form" method="post">
+                <h1>Register Now</h1>
+                <label>User Name : </label>
+                <br>
+                <input type="text" id="userName">
+                <br> <br>
+                <label>User email :</label>
+                <br>
+                <input type="email" id="userEmail">
+                <br> <br>
+                <label>User Password : </label>
+                <br>
+                <input type="password" id="userPassword">
+                <br> <br>
+                <button>Register</button>
+                <a href="/auth/loginData">Already have an account ?</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.querySelector("#form");
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            let userName = document.querySelector("#userName").value;
+            let userEmail = document.querySelector("#userEmail").value;
+            let userPassword = document.querySelector("#userPassword").value;
+
+            fetch("/auth/register", {
+                method: "POST",
+                body: JSON.stringify({ userName, userEmail, userPassword }),
+                headers: {
+                    "content-type": "application/json; charset=UTF-8"
+                }
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data)
+                    if (data.success) {
+                        window.location.href = "/auth/loginData";
+                    }
+                })
+                .catch((error) => console.log(error))
+
+            document.querySelector("#userName").value = "";
+            document.querySelector("#userEmail").value = "";
+            document.querySelector("#userPassword").value = "";
+        })
+    </script>
+</body>
+
+</html>
