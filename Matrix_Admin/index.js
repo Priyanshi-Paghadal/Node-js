@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const app = express();
 
 const connection = require("./Connection/db");
@@ -12,6 +13,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 app.use("/authRoutes", authRoutes);
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 3000 }
+}));
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
